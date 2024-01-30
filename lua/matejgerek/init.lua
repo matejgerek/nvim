@@ -1,2 +1,2 @@
-require("matejgerek.remap")
 require("matejgerek.set")
+require("matejgerek.remap")
