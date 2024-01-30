@@ -4,33 +4,22 @@ lsp_zero.on_attach(function(client, bufnr)
 	lsp_zero.default_keymaps({ buffer = bufnr })
 end)
 
-
+local lspconfig = require("lspconfig")
 require('mason').setup({})
 require('mason-lspconfig').setup({
-	ensure_installed = { 'tsserver' },
+	ensure_installed = { 'eslint' },
 	handlers = {
 		lsp_zero.default_setup,
-		require("lspconfig").tsserver.setup({
-			on_init = function(client)
-				client.server_capabilities.documentFormattingProvider = false
-				client.server_capabilities.documentFormattingRangeProvider = false
-			end,
-
-		})
+		eslint = function()
+			lspconfig.eslint.setup({
+				on_attach = function(client, bufnr)
+					vim.api.nvim_create_autocmd("BufWritePre", {
+						buffer = bufnr,
+						command = "EslintFixAll",
+					})
+					vim.keymap.set('n', '<leader>l', vim.cmd.EslintFixAll)
+				end,
+			})
+		end
 	},
 })
-
-local conform = require("conform")
-conform.setup({
-	formatters_by_ft = {
-		javascript = { { "prettierd" } },
-		typescript = { { "prettierd" } },
-		typescriptreact = { { "prettierd" } },
-		javascriptreact = { { "prettierd" } },
-	},
-	format_on_save = {
-		lsp_fallback = true,
-		timeout_ms = 500
-	},
-})
-vim.keymap.set("n", "<leader>f", conform.format, {})
