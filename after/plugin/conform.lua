@@ -5,6 +5,9 @@ conform.setup({
 		typescript = { { "prettierd" } },
 		typescriptreact = { { "prettierd" } },
 		javascriptreact = { { "prettierd" } },
+		graphql = { { 'prettierd' } },
+		json = { { 'prettierd' } },
+		yaml = { { 'prettierd' } }
 	},
 	format_on_save = {
 		lsp_fallback = true,
