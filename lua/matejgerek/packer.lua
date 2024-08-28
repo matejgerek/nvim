@@ -36,5 +36,10 @@ return require('packer').startup(function(use)
   }
 }
 use { "catppuccin/nvim", as = "catppuccin" }
-
+use {
+  "supermaven-inc/supermaven-nvim",
+  config = function()
+    require("supermaven-nvim").setup({})
+  end,
+}
 end)
